@@ -1,0 +1,32 @@
+#---delete the line below after you edit #1, #2, #3
+#$(error edit the Makefile first)
+
+##1
+#---serial port i/o node is on (eg COM13, /dev/ttyACM0)
+COMPORT=/dev/ttyUSB0
+
+##2
+#command to start serial port monitor, using $(COMPORT) as a placeholder for the port
+#settings: 8n1 at 115200 baud
+#---Windows command
+#SERIAL_MONITOR=utils\putty -serial $(COMPORT) -sercfg 115200
+#---possible *nix command
+SERIAL_MONITOR=gnome-terminal -e 'minicom --device $(COMPORT)'
+
+##3 *nix only execute in console from project folder
+#chmod 777 ./utils/ionprg
+
+CCFLAGS =-I ./include -L ./lib/* --std-sdcc99 --model-large --code-loc 0x0000 --code-size 0x4000 --xram-loc 0x0000 --xram-size 0x400
+
+ifeq ($(OS),Windows_NT)
+    RM=del
+else
+    RM=rm -f
+endif 
+
+main: main.c
+	sdcc $(CCFLAGS) main.c
+	packihx main.ihx > main.hex
+	./utils/ionprg main.hex $(COMPORT)
+	$(SERIAL_MONITOR)
+#	$(RM) *.asm *.ihx *.lk *.lst *.map *.mem *.rel *.rst *.sym *.lnk *.hex
