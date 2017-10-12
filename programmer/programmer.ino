@@ -468,7 +468,7 @@ void flash() {
     while (fsr & FSR_RDYN);
 
     // Read back flash to verify
-    Serial.println("VERIFYING...");
+    /*Serial.println("VERIFYING...");
     digitalWrite(_FCSN_, LOW);
     SPI.transfer(READ);
     SPI.transfer(highByte(hexRecord.rec_address));
@@ -487,7 +487,7 @@ void flash() {
       }
     }
     digitalWrite(_FCSN_, HIGH);
-
+*/
   }
 
 done:
@@ -532,6 +532,7 @@ void loop() {
 
   if (nRF24LE1Serial.available() > 0) {
     // Pass through serial data receieved from the nRF24LE1
+    //Serial.println("data available");
     Serial.write(nRF24LE1Serial.read());
   }
 

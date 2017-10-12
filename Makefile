@@ -6,6 +6,6 @@ CCFLAGS =-I ./include -L ./lib/* --std-sdcc99 --model-large --code-loc 0x0000 --
 main: main.c
 	sdcc $(CCFLAGS) main.c
 	packihx main.ihx > main.hex
-	./ionprg main.hex $(COMPORT)
+	./programmer.pl main.hex $(COMPORT)
 #	$(SERIAL_MONITOR)
 	rm -f *.asm *.ihx *.lk *.lst *.map *.mem *.rel *.rst *.sym *.lnk *.hex
