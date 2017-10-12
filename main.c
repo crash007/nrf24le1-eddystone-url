@@ -8,7 +8,7 @@
 // if you happen to use less than 13 bytes, change the Length field to the new length
 // http://3.ly/ provides short URLs that work well for this
 
-uint8_t beacon[18] =
+uint8_t beacon[17] =
 {
   
     0x03,  // Length
