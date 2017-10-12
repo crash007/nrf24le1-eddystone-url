@@ -38,7 +38,7 @@ struct btle_pdu_chunk {
 };
 
 uint8_t current;   // current channel index
-
+uint8_t a;
 const uint8_t channel[3]   = {37,38,39};  // logical BTLE channel number (37-39)
 const uint8_t frequency[3] = { 2,26,80};  // physical frequency (2400+x MHz)
 
@@ -104,6 +104,7 @@ void btleHopChannel() {
 	setChannel( frequency[current] );
 }
 
+
 // Broadcast an advertisement packet with optional payload
 // Data type will be 0xFF (Manufacturer Specific Data)
 bool btleAdvertise( void* buf, uint8_t buflen ) {
@@ -150,6 +151,12 @@ bool advertise( void* buf, uint8_t buflen ) {
 
 	// flush buffers and send
 	stopListening();
+	
+	   /* for loop execution */
+   	for( a = 0; a < pls+11; a = a + 1 ){
+      	printf("0x%x, ", outbuf[a]);
+   	}
+	printf("\n");
 	write( outbuf, pls+11, false );
 
 	return true;
