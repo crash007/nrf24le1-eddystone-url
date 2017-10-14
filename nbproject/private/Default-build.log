@@ -1,0 +1,8 @@
+sdcc -I ./include -L ./lib/* --std-sdcc99 --model-large --code-loc 0x0000 --code-size 0x4000 --xram-loc 0x0000 --xram-size 0x400 main.c
+packihx main.ihx > main.hex
+packihx: read 351 lines, wrote 656: OK.
+./programmer.pl main.hex /dev/ttyUSB0
+stty: /dev/ttyUSB0: Filen eller katalogen finns inte
+Cannot open /dev/ttyUSB0: No such file or directory at ./programmer.pl line 76.
+Makefile:7: receptet för målet ”main” misslyckades
+make: *** [main] Fel 2

@@ -1,8 +1,9 @@
 #include "wiring.h"
 #include "btle.h"
-#include "uart.h"
+//#include "uart.h"
 #define UARTTXPIN		P0_3		// P1.1 - UART TX
 #define UARTRXPIN		P0_4		// P0.4	- UART RX
+#define SLEEP_TIME		500
 
 // this is the largest packet that a 24l01 or 24le1 can send
 // see https://github.com/google/eddystone/tree/master/eddystone-url for how to construct the url
@@ -39,7 +40,7 @@ void setup(){
 	
 	
 	interrupts();							// turn interrupts on
-	
+	/*
 	gpio_pin_configure(UARTTXPIN,
                                            GPIO_PIN_CONFIG_OPTION_DIR_OUTPUT |
                                            GPIO_PIN_CONFIG_OPTION_OUTPUT_VAL_SET |
@@ -51,13 +52,14 @@ void setup(){
 
     	uart_configure_8_n_1_19200();
 	delay_ms(500);
-	
+	*/
+        
 	btleBegin();							// setup the radio	
 	//	btleAdvertise(&beacon, sizeof(beacon));		// start advertising the packet above
 	stopListening();
 	write( rawBeacon, sizeof(rawBeacon), false );
-	
-	watchdogRun(1000);						// start watchdog and reset at 700 ms
+	powerDown();
+	watchdogRun(SLEEP_TIME);						// start watchdog and reset at 700 ms
 	sleep(MEMORY_TIMER_OFF);				// switch to lowest mode that can wakeup from wdt
         
 }
